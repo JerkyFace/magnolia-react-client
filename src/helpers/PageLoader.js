@@ -1,6 +1,6 @@
 import React from 'react';
 import config from '../magnolia.config';
-import { getAPIBase, getLanguages, removeCurrentLanguage, getCurrentLanguage } from './AppHelpers';
+import { getAPIBase, getLanguages, removeCurrentLanguage, getCurrentLanguage, getVersion } from './AppHelpers';
 
 import { EditablePage, EditorContextHelper } from '@magnolia/react-editor';
 
@@ -29,9 +29,16 @@ class PageLoader extends React.Component {
 
     const pagePath = this.getPagePath();
     console.log('pagePath:' + pagePath);
-    let fullContentPath = apiBase + process.env.REACT_APP_MGNL_API_PAGES + pagePath;
+    const config = {
+      headers: {}
+    };
 
-    const pageResponse = await fetch(fullContentPath);
+    const version = getVersion(window.location.href);
+
+
+    let fullContentPath = `${apiBase}${version ? process.env.REACT_APP_MGNL_API_PAGES_PREVIEW : process.env.REACT_APP_MGNL_API_PAGES}${pagePath}}`;
+
+    const pageResponse = await fetch(fullContentPath, config);
     const pageJson = await pageResponse.json();
     console.log('page content: ', pageJson);
 
@@ -39,11 +46,10 @@ class PageLoader extends React.Component {
     console.log('templateId:', templateId);
 
     let templateJson = null;
-    if (EditorContextHelper.inEditor()) {
-      const templateResponse = await fetch(apiBase + process.env.REACT_APP_MGNL_API_TEMPLATES + pagePath);
-      templateJson = await templateResponse.json();
-      console.log('definition:', templateJson);
-    }
+    const templateResponse = await fetch(apiBase + process.env.REACT_APP_MGNL_API_TEMPLATES + pagePath);
+    templateJson = await templateResponse.json();
+    console.log('definition:', templateJson);
+
 
     this.setState({
       init: true,
@@ -71,12 +77,13 @@ class PageLoader extends React.Component {
   render() {
     if (this.state.init) {
       console.log('config:', config);
+
       return (
         <EditablePage
-        templateAnnotations={this.state.templateAnnotations || {}}
+          templateAnnotations={this.state.templateAnnotations || {}}
           content={this.state.content}
-          config={config} >
-        </EditablePage>
+          config={config}
+        ></EditablePage>
       );
     } else {
       return <p>NO PAGE.</p>;

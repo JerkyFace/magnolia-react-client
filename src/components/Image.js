@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from '../logo.svg';
 
 const Image = props => 
     
-<img src={logo} className="App-logo" alt="logo" />
+<img className="Image" src={process.env.REACT_APP_MGNL_DAM_RAW + props.image['@link']} alt="Etiam Purus" />
 
 
 export default Image;

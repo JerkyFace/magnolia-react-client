@@ -6,7 +6,7 @@ export function getAPIBase() {
     M = process.env.REACT_APP_MGNL_BASE_PUBLIC;
   }
   let API_BASE = process.env.REACT_APP_MGNL_HOST + M;
-  return API_BASE !== 'undefined' ? API_BASE : '';
+  return API_BASE;
 }
 
 export function getLanguages() {
@@ -61,4 +61,8 @@ export function getRouterBasename() {
   const currentLanguage = getCurrentLanguage();
 
   return languages[0] === currentLanguage ? '/' : '/' + currentLanguage;
+}
+
+export function getVersion(path) {
+  return new URLSearchParams(path).get('mgnlVersion');
 }

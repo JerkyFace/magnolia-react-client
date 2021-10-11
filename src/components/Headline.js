@@ -2,6 +2,6 @@ import React from 'react';
 
 const Headline = props => 
 
-  <p className="App-Edit-p">Edit <code>{props.filePath}</code> and save to reload.</p>;
+<h2 className="Headline">{props.text}</h2>;
 
 export default Headline;

@@ -1,16 +1,25 @@
 import Basic from './pages/Basic';
-import Image from './components/Image';
 import Headline from './components/Headline';
-import Link from './components/Link';
+import Image from './components/Image';
+import Paragraph from './components/Paragraph';
+import Expander from './components/Expander';
+import List from './components/List';
+import Item from './components/Item';
+import NewsList from "./components/NewsList";
+
 
 const config = {
     'componentMappings':{
-        // Page Components
-        'no-light-module:pages/basic': Basic,
-        // Components
-        'no-light-module:components/image': Image,
-        'no-light-module:components/headline': Headline,
-        'no-light-module:components/link': Link,
+        'react-minimal-lm:pages/basic': Basic,
+    
+        'spa-lm:components/headline': Headline,
+        'spa-lm:components/image': Image,
+        'spa-lm:components/paragraph': Paragraph,
+        'spa-lm:components/expander': Expander,
+        'spa-lm:components/list': List,
+        'spa-lm:components/listItem': Item,
+        'spa-lm:components/newsList': NewsList
+
     }
 };
 
